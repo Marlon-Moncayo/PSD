@@ -1,0 +1,357 @@
+# -*- coding: utf-8 -*-
+"""
+
+@author: Marlon
+"""
+import numpy as np
+import pylab as plt
+"""Muestreo de señales  """
+
+
+"""Ejercicio 1"""
+"""Genere la señal x(t) = 2cos(60πt)"""
+frec=30
+amplitud=2
+fase=0
+tmin=-0.2
+tmax=0.2
+t=np.linspace(tmin, tmax, 400)
+x1 = 2*np.cos(2*np.pi*frec*t)
+plt.plot(x1,label='x1(t)= 2cos(60pi.t)',color='g')
+plt.title("Ejercicio 1")
+plt.legend(loc='best')
+plt.grid()
+print()
+#####################################################################
+"""Señal muestreada"""
+muestreo1=np.arange(0,1,1/100)
+fase=0
+tmin=-0.2
+tmax=0.2
+amp=2
+frec=30
+T=1/(2*frecuencia)
+x1=amp*np.cos(2*np.pi*frec*muestreo)
+plt.grid()
+#tiempos de la grafica 
+Nmin=np.ceil(tmin/T)
+Nmax=np.floor(tmax/T)
+#muestras de la señal
+n=np.arange(Nmin,Nmax)
+#señal d emuestreo
+x1=np.cos(2*np.pi*n*T*frecuencia)
+#graficar señal
+plt.plot(n*T,x1)
+plt.plot(n*T,x1,'r.')
+
+""" Determine el tiempo donde se pueda obversar que oscile una sola vez """
+frec=30
+amplitud=2
+fase=0
+tmin=-0.033
+tmax=0.033
+t=np.linspace(tmin, tmax, 400)
+x1 = 2*np.cos(2*np.pi*frec*t)
+plt.plot(x1,label='x1(t)= 2cos(60pi.t)',color='g')
+plt.title("Ejercicio 1")
+plt.legend(loc='best')
+plt.grid()
+print()
+
+"""muestreo la señal a 2B"""
+muestreo=np.arange(0,1,1/100)
+fase=0
+tmin=-0.2
+tmax=0.2
+amp=2
+frec=30
+periodo=2*np.pi
+T=1/(2*frec)
+x1=amp*np.cos(2*np.pi*frec*muestreo)
+plt.grid()
+#tiempos de la grafica 
+nmin=np.ceil(tmin/T)
+nmax=np.floor(tmax/T)
+#muestras de la señal
+n=np.arange(nmin,nmax)
+#señal d emuestreo
+x1=np.cos(2*np.pi*n*T*frec)
+#graficar señal
+plt.plot(n*T,x1)
+plt.plot(n*T,x1,'g')
+
+
+"""muestreo la señal a 4B """
+muestreo=np.arange(0,1,1/100)
+fase=0
+tmin=-0.2
+tmax=0.2
+amp=2
+frec=30
+periodo=2*np.pi
+T=1/(4*frec)
+x1=amp*np.cos(2*np.pi*frec*muestreo)
+plt.grid()
+#tiempos de la grafica 
+nmin=np.ceil(tmin/T)
+nmax=np.floor(tmax/T)
+#muestras de la señal
+n=np.arange(nmin,nmax)
+#señal d emuestreo
+x1=np.cos(2*np.pi*n*T*frecuencia)
+#graficar señal
+plt.plot(n*T,x1, 'r')
+plt.plot(n*T,x1,'g*')
+"""muestreo la señal a 6B """
+muestreo=np.arange(0,1,1/100)
+fase=0
+tmin=-0.2
+tmax=0.2
+amp=2
+frec=30
+periodo=2*np.pi
+T=1/(6*frec)
+x1=amp*np.cos(2*np.pi*frec*muestreo)
+plt.grid()
+#tiempos de la grafica 
+nmin=np.ceil(tmin/T)
+nmax=np.floor(tmax/T)
+#muestras de la señal
+n=np.arange(nmin,nmax)
+#señal d emuestreo
+x1=np.cos(2*np.pi*n*T*frecuencia)
+#graficar señal
+plt.plot(n*T,x1, 'g')
+plt.plot(n*T,x1,'b.')
+##############################################################################
+
+"""Ejercicio 2"""
+"""Genere la señal x(t) = 2cos(60πt)+2cos(80πt)+2cos(90πt)"""
+f=30
+f1=40
+f2=45  #Hz
+tmin=0
+tmax=0.2
+amp=2
+#
+t=np.linspace(tmin,tmax,400)
+#definir la señal
+x=(amp*np.cos(2*np.pi*f*t))+(amp*np.cos(2*np.pi*f1*t))+(amp*np.cos(2*np.pi*f2*t))
+#graficar la señal
+plt.plot(t,x)
+
+#muestreo de la señal
+#periodo del muestreo
+T=1/(16*f2)
+#tiempos de la grafica
+nmin=np.ceil(tmin/T)
+nmax=np.floor(tmax/T)
+
+#muestras de la señal
+n=np.arange(nmin,nmax)
+#señal de muestreo
+x2=(amp*np.cos(2*np.pi*f*n*T))+(amp*np.cos(2*np.pi*f1*n*T))+(amp*np.cos(2*np.pi*f2*n*T))
+#graficar la señal
+plt.plot(n*T,x2,'b.') #b. -> blue points
+
+
+
+
+f=30
+f1=40
+f2=45
+amp=2
+#función para oscilar una vez T=1/45=0.25
+tmin1=-0.02
+tmax1=0.02
+#
+t1=np.linspace(tmin,tmax,400)
+x23=(amp*np.cos(2*np.pi*f*t))+(amp*np.cos(2*np.pi*f1*t))+(amp*np.cos(2*np.pi*f2*t))
+
+
+plt.plot(t1,x23,label="2cos(60πt)",color="yellow")
+plt.title("Muestreo de Señal a B")
+plt.xlabel("tiempo")
+plt.ylabel("voltaje")
+plt.grid()
+
+T2=1/(2*f2)
+nmin2=np.ceil(tmin1/T2)
+nmax2=np.ceil(tmax1/T2)
+
+
+n1=np.arange(nmin2,nmax2)
+x12=(amp*np.cos(2*np.pi*f*n1*T2))+(amp*np.cos(2*np.pi*f1*n1*T2))+(amp*np.cos(2*np.pi*f2*n1*T2))
+plt.plot(n1*T2,x12,'b.')
+plt.show()
+
+"""Generar una sola oscilacion"""
+f=30
+f1=40
+f2=45  #Hz
+tmin=0.023
+tmax=0.223
+amp=2
+#
+t=np.linspace(tmin,tmax,400)
+#definir la señal
+x=(amp*np.cos(2*np.pi*f*t))+(amp*np.cos(2*np.pi*f1*t))+(amp*np.cos(2*np.pi*f2*t))
+#graficar la señal
+plt.plot(t,x)
+
+#muestreo de la señal
+#periodo del muestreo
+T=1/(6*f2)
+#tiempos de la grafica
+nmin=np.ceil(tmin/T)
+nmax=np.floor(tmax/T)
+
+#muestras de la señal
+n=np.arange(nmin,nmax)
+#señal de muestreo
+x2=(amp*np.cos(2*np.pi*f*n*T))+(amp*np.cos(2*np.pi*f1*n*T))+(amp*np.cos(2*np.pi*f2*n*T))
+#graficar la señal
+plt.plot(n*T,x2,'r*')
+
+
+
+"""Ejercicio 3"""
+"""Señal x(t)=2cos(600pit)+2cos(800pit)+2cos(900pit)"""
+f =300  # Hz
+f1=400
+f2=450
+fmcm=3600
+amp=2
+#Tiempo minimo y maximo
+tmin = -0.02
+tmax = 0.02
+#Se define el tiempo de la segnal.
+t = np.linspace(tmin, tmax, 400)
+#Se define la segnal de muestreo
+x =amp*(np.cos(2*np.pi*t*f) + np.cos(2*np.pi*f1*t)+np.cos(2*np.pi*f2*t))
+#Se grafica el tiempo y la segnal.
+plt.plot(t, x)
+# sampling the signal with a sampling rate of 80 Hz
+# in this case, we are using the Nyquist rate.
+#Muestreo de la segnal con una velocidad de muestreo de 80 Hz.
+#Periodo de muestreo
+"""Muestreo de la señal""""
+T = 1/(2*fmcm)
+#Tiempo minimo
+nmin = np.ceil(tmin / T)
+#Tiempo maximo
+nmax = np.floor(tmax / T)
+#Tiempo de la segnal.
+n = np.arange(nmin,nmax)
+#Segnal a la velocidad de muestreo
+x1 = amp*(np.cos(2*np.pi*T*f*n) + np.cos(2*np.pi*f1*T*n)+np.cos(2*np.pi*f2*T*n))
+#Se grafica la segnal.
+plt.plot(n*T, x1, 'r.')
+
+
+"""Determine el tiempo donde se pueda obversar que oscile una sola vez"""
+f =300  # Hz
+f1=400
+f2=450
+fmcm=3600
+amp=2
+#Tiempo minimo y maximo
+tmin = -0.005
+tmax = 0.005
+#Se define el tiempo de la segnal.
+t = np.linspace(tmin, tmax, 400)
+#Se define la segnal de muestreo
+x =amp*(np.cos(2*np.pi*t*f) + np.cos(2*np.pi*f1*t)+np.cos(2*np.pi*f2*t))
+#Se grafica el tiempo y la segnal.
+plt.plot(t, x)
+
+"""Muestreo de la señal 2B""""
+f =300  # Hz
+f1=400
+f2=450
+fmcm=3600
+amp=2
+#Tiempo minimo y maximo
+tmin = -0.02
+tmax = 0.02
+#Se define el tiempo de la segnal.
+t = np.linspace(tmin, tmax, 400)
+#Se define la segnal de muestreo
+x =amp*(np.cos(2*np.pi*t*f) + np.cos(2*np.pi*f1*t)+np.cos(2*np.pi*f2*t))
+#Se grafica el tiempo y la segnal.
+plt.plot(t, x)
+
+
+T = 1/(2*fmcm)
+#Tiempo minimo
+nmin = np.ceil(tmin / T)
+#Tiempo maximo
+nmax = np.floor(tmax / T)
+#Tiempo de la segnal.
+n = np.arange(nmin,nmax)
+#Segnal a la velocidad de muestreo
+x1 =amp*( np.cos(2*np.pi*T*f*n) + np.cos(2*np.pi*f1*T*n)+np.cos(2*np.pi*f2*T*n))
+#Se grafica la segnal.
+plt.plot(n*T, x1, 'r.')
+
+
+"""Muestreo de la señal 4B""""
+f =300  # Hz
+f1=400
+f2=450
+fmcm=3600
+amp=2
+#Tiempo minimo y maximo
+tmin = -0.02
+tmax = 0.02
+#Se define el tiempo de la segnal.
+t = np.linspace(tmin, tmax, 400)
+#Se define la segnal de muestreo
+x =amp*(np.cos(2*np.pi*t*f) + np.cos(2*np.pi*f1*t)+np.cos(2*np.pi*f2*t))
+#Se grafica el tiempo y la segnal.
+plt.plot(t, x)
+
+T = 1/(4*fmcm)
+#Tiempo minimo
+nmin = np.ceil(tmin / T)
+#Tiempo maximo
+nmax = np.floor(tmax / T)
+#Tiempo de la segnal.
+n = np.arange(nmin,nmax)
+#Segnal a la velocidad de muestreo
+x1 = np.cos(2*np.pi*T*f*n) + np.cos(2*np.pi*f1*T*n)+np.cos(2*np.pi*f2*T*n)
+#Se grafica la segnal.
+plt.plot(n*T, x1, 'g.')
+
+
+"""Muestreo de la Señal 6B""""
+f =300  # Hz
+f1=400
+f2=450
+fmcm=3600
+amp=2
+#Tiempo minimo y maximo
+tmin = -0.02
+tmax = 0.02
+#Se define el tiempo de la segnal.
+t = np.linspace(tmin, tmax, 400)
+#Se define la segnal de muestreo
+x =amp*(np.cos(2*np.pi*t*f) + np.cos(2*np.pi*f1*t)+np.cos(2*np.pi*f2*t))
+#Se grafica el tiempo y la segnal.
+plt.plot(t, x)
+# sampling the signal with a sampling rate of 80 Hz
+# in this case, we are using the Nyquist rate.
+#Muestreo de la segnal con una velocidad de muestreo de 80 Hz.
+#Periodo de muestreo
+
+T = 1/(6*fmcm)
+#Tiempo minimo
+nmin = np.ceil(tmin / T)
+#Tiempo maximo
+nmax = np.floor(tmax / T)
+#Tiempo de la segnal.
+n = np.arange(nmin,nmax)
+#Segnal a la velocidad de muestreo
+x1 = np.cos(2*np.pi*T*f*n) + np.cos(2*np.pi*f1*T*n)+np.cos(2*np.pi*f2*T*n)
+#Se grafica la segnal.
+plt.plot(n*T, x1, 'r.')

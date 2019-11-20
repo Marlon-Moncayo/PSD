@@ -1,0 +1,486 @@
+# librerias
+import proximidadsensor as sig5
+import respisensor as sig6
+import tempsensor as sig7
+import acelerometrosignal as sig4
+import fuerzasignal as sig3
+import signalheart as sig
+import dobladassignal as sigs
+import numpy as np
+import pylab as plt
+from scipy import signal
+from scipy.ndimage import gaussian_filter
+
+##### Senales del corazon ###
+#####   Visualizar la señal del corazon
+sig_input_sensor=sig.sensor
+n_1=len(sig_input_sensor)
+plt.plot(sig_input_sensor, color='orange', label="señal original del corazon")
+plt.plot(sig_input_sensor, color='orange', label="señal original del corazon")
+plt.show()
+### Mean Average para la señal de corazon
+#definir ventana
+k=14
+m=0
+mean_smooth=np.zeros(n_1)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_1-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sig_input_sensor[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sig_input_sensor,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=9
+mean_smooth1=np.zeros(n_1)
+for i in range(int(np.floor(k/2)),int(n_1-np.floor(k/2)-1)):
+    mean_smooth1[i]=491
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sig_input_sensor[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sig_input_sensor,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_1)
+for i in range (k+1,n_1-k-1):
+    m+=1
+    median_smooth[i]=np.median(sig_input_sensor[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sig_input_sensor, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sig_input_sensor,9,3) ##Señal de entrada, tamaño, exponente
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+plt.plot(sig_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sig_input_sensor,2)
+plt.plot(gaus_smooth,color='green', label="data smoothing") 
+plt.plot(sig_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+
+import dobladassignal as sigs
+import numpy as np
+import pylab as plt
+from scipy import signal
+from scipy.ndimage import gaussian_filter
+"""   ******************                  Senal de Dobladas   *****************                """
+##### Senales de dobladas ###
+#####   Visualizar la señal de doblar
+
+sigs_input_sensor2=sigs.sensor2
+n_2=len(sigs_input_sensor2)
+plt.plot(sigs_input_sensor2, color='orange', label="señal original del corazon")
+plt.plot(sigs_input_sensor2, color='orange', label="señal original del corazon")
+plt.show()
+
+### Mean Average para la señal de dobladas
+#definir ventana
+k=14
+m=0
+mean_smooth=np.zeros(n_2)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_2-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sigs_input_sensor2[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sigs_input_sensor2,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=9
+mean_smooth1=np.zeros(n_2)
+for i in range(int(np.floor(k/2)),int(n_2-np.floor(k/2)-1)):
+    mean_smooth1[i]=3
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sigs_input_sensor2[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sigs_input_sensor2,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_2)
+for i in range (k+1,n_2-k-1):
+    m+=1
+    median_smooth[i]=np.median(sigs_input_sensor2[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sigs_input_sensor2, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sigs_input_sensor2,9,3) ##Señal de entrada, tamaño, exponente
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+##plt.plot(sigs_input_sensor2, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sigs_input_sensor2,2)
+plt.plot(gaus_smooth,color='blue', label="data smoothing") 
+##plt.plot(sigs_input_sensor2, color='red', label="original sample")
+plt.show()
+
+
+
+"""   ******************                  Senal de Fuerza   *****************                """
+##### Senales de fuerza ###
+#####   Visualizar la señal de fuerza
+
+sig3_input_sensor3=sig3.sensor3
+n_3=len(sig3_input_sensor3)
+plt.plot(sig3_input_sensor3, color='orange', label="señal original del corazon")
+plt.plot(sig3_input_sensor3, color='orange', label="señal original del corazon")
+plt.show()
+
+### Mean Average para la señal de dobladas
+#definir ventana
+k=14
+m=0
+mean_smooth=np.zeros(n_3)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_3-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sig3_input_sensor3[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sig3_input_sensor3,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=9
+mean_smooth1=np.zeros(n_3)
+for i in range(int(np.floor(k/2)),int(n_3-np.floor(k/2)-1)):
+    mean_smooth1[i]=1.5
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sig3_input_sensor3[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sig3_input_sensor3,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_3)
+for i in range (k+1,n_3-k-1):
+    m+=1
+    median_smooth[i]=np.median(sig3_input_sensor3[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sig3_input_sensor3, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sig3_input_sensor3,9,3) ##Señal de entrada, tamaño, exponente
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+plt.plot(sig3_input_sensor3, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sig3_input_sensor3,2)
+plt.plot(gaus_smooth,color='black', label="data smoothing") 
+plt.plot(sig3_input_sensor3, color='red', label="original sample")
+plt.show()
+
+
+
+
+"""   ******************                  Senal del Acelerometro   *****************                """
+##### Senales del acelerometro ###
+#####   Visualizar la señal del acelerometro
+
+sig4_input_sensor4=sig4.sensor4
+n_4=len(sig4_input_sensor4)
+plt.plot(sig4_input_sensor4, color='orange', label="señal original del corazon")
+plt.plot(sig4_input_sensor4, color='orange', label="señal original del corazon")
+plt.show()
+
+### Mean Average para la señal el acelerometro
+#definir ventana
+k=14
+m=0
+mean_smooth=np.zeros(n_4)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_4-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sig4_input_sensor4[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sig4_input_sensor4,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=9
+mean_smooth1=np.zeros(n_4)
+for i in range(int(np.floor(k/2)),int(n_4-np.floor(k/2)-1)):
+    mean_smooth1[i]=454
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sig4_input_sensor4[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sig4_input_sensor4,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_4)
+for i in range (k+1,n_4-k-1):
+    m+=1
+    median_smooth[i]=np.median(sig4_input_sensor4[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sig4_input_sensor4, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sig4_input_sensor4,9,3) ##Señal de entrada, tamaño, exponente
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+plt.plot(sig4_input_sensor4, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sig4_input_sensor4,2)
+plt.plot(gaus_smooth,color='black', label="data smoothing") 
+plt.plot(sig4_input_sensor4, color='red', label="original sample")
+plt.show()
+
+"""Senales de proximidad"""
+
+#####   Visualizar la señal 
+sig5_input_sensor=sig5.sensor
+n_5=len(sig5_input_sensor)
+plt.plot(sig5_input_sensor, color='orange', label="señal original del corazon")
+plt.plot(sig5_input_sensor, color='orange', label="señal original del corazon")
+plt.show()
+### Mean Average para la señal
+#definir ventana
+k=14
+m=0
+mean_smooth=np.zeros(n_5)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_5-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sig5_input_sensor[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sig5_input_sensor,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=9
+mean_smooth1=np.zeros(n_5)
+for i in range(int(np.floor(k/2)),int(n_5-np.floor(k/2)-1)):
+    mean_smooth1[i]=491
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sig5_input_sensor[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sig5_input_sensor,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_5)
+for i in range (k+1,n_5-k-1):
+    m+=1
+    median_smooth[i]=np.median(sig5_input_sensor[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sig5_input_sensor, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sig5_input_sensor,9,3) 
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+plt.plot(sig5_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sig5_input_sensor,2)
+plt.plot(gaus_smooth,color='green', label="data smoothing") 
+plt.plot(sig5_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+
+"""Senales de respiracion"""
+
+
+
+#####   Visualizar la señal 
+sig6_input_sensor=sig6.sensor
+n_6=len(sig6_input_sensor)
+plt.plot(sig6_input_sensor, color='orange', label="señal original del corazon")
+plt.plot(sig6_input_sensor, color='orange', label="señal original del corazon")
+plt.show()
+### Mean Average para la señal
+#definir ventana
+k=14
+m=0
+mean_smooth=np.zeros(n_6)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_6-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sig6_input_sensor[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sig6_input_sensor,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=9
+mean_smooth1=np.zeros(n_6)
+for i in range(int(np.floor(k/2)),int(n_6-np.floor(k/2)-1)):
+    mean_smooth1[i]=491
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sig6_input_sensor[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sig6_input_sensor,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_6)
+for i in range (k+1,n_6-k-1):
+    m+=1
+    median_smooth[i]=np.median(sig6_input_sensor[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sig6_input_sensor, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sig6_input_sensor,9,3) 
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+plt.plot(sig6_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sig6_input_sensor,2)
+plt.plot(gaus_smooth,color='green', label="data smoothing") 
+plt.plot(sig6_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+
+"""Senales de temperatura"""
+#####   Visualizar la señal 
+sig7_input_sensor=sig7.sensor
+n_7=len(sig5_input_sensor)
+plt.plot(sig7_input_sensor, color='orange', label="señal original del corazon")
+plt.plot(sig7_input_sensor, color='orange', label="señal original del corazon")
+plt.show()
+### Mean Average para la señal
+#definir ventana
+k=11
+m=0
+mean_smooth=np.zeros(n_7)#Llenar un vector de tamano n con zeros
+for i in range(k+1,n_7-k-1):
+    m+=1 
+    mean_smooth[i]=np.mean(sig7_input_sensor[i-k:m+k])
+plt.plot(mean_smooth,color='blue', label ='data smoothing')
+plt.plot(sig7_input_sensor,color='red',label='original samples')
+plt.show()
+
+#### Variacion Mean average 
+k=11
+mean_smooth1=np.zeros(n_7)
+for i in range(int(np.floor(k/2)),int(n_6-np.floor(k/2)-1)):
+    mean_smooth1[i]=491
+    for j in range(int(-np.floor(k/2)),int(np.floor(k/2))):
+        mean_smooth1[i]=mean_smooth1[i]+sig7_input_sensor[i+j]
+    mean_smooth1[i]=mean_smooth1[i]/k
+    
+plt.plot(mean_smooth1,color='blue', label ='data smoothing')
+plt.plot(sig7_input_sensor,color='orange',label='original samples')
+plt.show()
+
+###Median
+k=11
+m=0
+median_smooth=np.zeros(n_7)
+for i in range (k+1,n_7-k-1):
+    m+=1
+    median_smooth[i]=np.median(sig7_input_sensor[i-k:m+k])
+    
+plt.plot(median_smooth,color='blue', label="data smoothing") 
+plt.plot(sig7_input_sensor, color='red', label="original sample")
+plt.show()
+
+#### Savitzky Golay
+
+savis_smooth=signal.savgol_filter(sig7_input_sensor,9,3) 
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label="data smoothing") 
+plt.plot(sig7_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+####### Gaussian smmothing
+
+gaus_smooth=gaussian_filter(sig7_input_sensor,2)
+plt.plot(gaus_smooth,color='green', label="data smoothing") 
+plt.plot(sig7_input_sensor, color='red', label="original sample")
+plt.show()
+
+
+##Relacion senal/ruido###
+##t = np.linspace(220, 600, 1)
+sig_input_sensor=sig.sensor
+n_1=len(sig_input_sensor)
+plt.plot(sig_input_sensor)
+plt.title('Signal')
+plt.ylabel('Voltage (V)')
+plt.xlabel('Time (s)')
+plt.show()
+
+x_watts = sig_input_sensor ** 2
+plt.plot(x_watts)
+plt.title('Signal Power')
+plt.ylabel('Power (W)')
+plt.xlabel('Time (s)')
+plt.show()
+
+x_db = 10 * np.log10(x_watts)
+plt.plot(t, x_db)
+plt.title('Signal Power in dB')
+plt.ylabel('Power (dB)')
+plt.xlabel('Time (s)')
+plt.show()

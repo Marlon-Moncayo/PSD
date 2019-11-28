@@ -1,0 +1,172 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 27 20:46:59 2019
+
+@author: Dell
+"""
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+import pylab as pl
+from IPython import display
+import time as time
+import random
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.stats import pearsonr as pr
+
+# writing the complex number as real + imaginary
+z1 = 2 + 1j*3
+z2 = 5 - 1j*5
+z3 = 4 + 1j*2
+print(z1, z2, z3)
+
+# Senoides
+# x1(t)= 2cos(50pit)
+t=np.arange(-5, 0.5,1/45)
+freq1 = 25;    # frequency in Hz
+amp = 2;    # amplitude in a.u. 
+x1= amp*np.cos(2*np.pi*freq1*t)
+plt.plot(x1,color="blue")
+plt.grid()
+plt.show
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.title("Señal 1")
+plt.legend(loc='best')
+
+# x2(t)= 2cos(75pit+pi)
+t=np.arange(-5, 0.5,1/45)
+freq2 = 75/2;    # frequency in Hz
+amp = 2;    # amplitude in a.u. 
+fase = np.pi;
+x2= amp*np.cos(2*np.pi*freq2*t+fase)
+plt.plot(x2,color="red")
+plt.grid()
+plt.show
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.title("Señal 1")
+plt.legend(loc='best')
+
+# Graficar los resultados de:
+# Suma de Numeros Complejos
+print("Suma de Numeros Complejos")
+z1 = 2 + 1j*3
+z2 = 5 - 1j*5
+z3 = 4 + 1j*2
+z12 = z1 + z2
+print(z1,"+",z2)
+print("El resultado es: ",z12)
+plt.plot(np.real(z12),np.imag(z12),'bo')
+# some plotting touch-ups
+plt.axis('square')
+plt.grid(True)
+plt.xlabel('Real axis'), plt.ylabel('Imaginary axis')
+plt.show()
+
+# Multiplicacion de Numeros Complejos
+print("Multiplicacion de Numeros Complejos")
+z23 = z2 * z3
+print(z2,"*",z3)
+print("El resultado es: ",z23)
+plt.plot(np.real(z23),np.imag(z23),'bo')
+# some plotting touch-ups
+plt.axis('square')
+plt.grid(True)
+plt.xlabel('Real axis'), plt.ylabel('Imaginary axis')
+plt.show()
+
+
+# Divison entre Numeros Complejos
+print("Division de Numeros Complejos")
+z32 = z3 / z2
+print(z2,"/",z3)
+print("El resultado es: ",z32)
+plt.plot(np.real(z32),np.imag(z32),'bo')
+# some plotting touch-ups
+plt.axis('square')
+#plt.axis([-10, 5, -5, 10])
+plt.grid(True)
+plt.xlabel('Real axis'), plt.ylabel('Imaginary axis')
+plt.show()
+
+
+# Grafica de la Primera exponencial exp(x1(t))
+print("exp(x1(t))")
+srate=500;
+time=np.arange(0.,0.65,1/srate)
+freq1 = 25;    # frequency in Hz
+amp = 2;    # amplitude in a.u. 
+x1= amp*np.cos(2*np.pi*freq1*time)
+csw1=np.exp(x1);
+fig = plt.figure()
+plt.plot(time,csw1)
+plt.grid()
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.title("Señal 1: exp(x1(t)) ")
+plt.legend(loc='best')
+plt.show()
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+ax.plot(time,np.real(csw1),np.imag(csw1))
+ax.set_xlabel('Time (s)'), ax.set_ylabel('Real part'), ax.set_zlabel('Imag part')
+ax.set_title('Complex sine wave in all its 3D glory')
+plt.show()
+
+# Grafica de la Segunda exponencial exp(x2(t))
+print("exp(x2(t))")
+srate=500;
+time=np.arange(0.,0.75,1./srate)
+freq2 = 75/2;    # frequency in Hz
+amp = 2;    # amplitude in a.u. 
+fase = np.pi;
+x2= amp*np.cos(2*np.pi*freq2*time+fase)
+csw2=np.exp(amp*np.cos(2*np.pi*freq2*time+fase));
+fig = plt.figure()
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+ax.plot(time,np.real(csw2),np.imag(csw2))
+ax.set_xlabel('Time (s)'), ax.set_ylabel('Real part'), ax.set_zlabel('Imag part')
+ax.set_title('Una onda compleja en 3D')
+plt.show()
+
+# Producto punto x1(t)(.)x2(t)
+srate=500;
+time=np.arange(0.,0.25,1/srate)
+freq1 = 25;    # frequency in Hz
+amp = 2;    # amplitude in a.u. 
+x1= amp*np.cos(2*np.pi*freq1*time)
+time=np.arange(0.,0.25,1/srate)
+freq2 = 75/2;    # frequency in Hz
+amp = 2;    # amplitude in a.u. 
+fase = np.pi;
+x2= amp*np.cos(2*np.pi*freq2*time+fase)
+dp = sum( np.multiply(x1,x2) )
+print('El valor del producto punto entre x1(t) y x2(t) es: ',dp)
+
+# Grafica del prodcuto punto entre una señal gaussiana y x1(t)
+srate = 1000;
+time  = np.arange(-1.,1.,1./srate)
+ 
+x1= amp*np.cos(2*np.pi*freq1*time)
+gauss  = np.exp( (-time**2) / .1);
+signal = np.multiply(x1,gauss)
+sinefrex = np.arange(0.,25.,.5);
+plt.plot(time,signal)
+plt.xlabel('Time (sec.)'), plt.ylabel('Amplitude (a.u.)')
+plt.title('Signal')
+plt.show()
+
+dps = np.zeros(len(sinefrex));
+# bucle de las ondas sinusoidales
+for fi in range(1,len(dps)):
+    # crear la señal sinusoidal
+    sinew = np.sin(2*np.pi*sinefrex[fi]*time) 
+    # compute dot product
+    dps[fi] = np.dot(sinew,signal ) / len(time)
+# and plot
+plt.stem(sinefrex,dps)
+plt.xlabel('frecuencia señal sinusoidal (Hz)'), plt.ylabel('Producto punto')
+plt.title('Producto punto con ondas sinusoidales')
+plt.show()

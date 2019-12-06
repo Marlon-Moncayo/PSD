@@ -1,0 +1,118 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Dec  5 17:21:23 2019
+
+@author: Marlon
+"""
+import tkinter as tk
+from tkinter import * #*importar todas las clases
+import numpy as np
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import pylab as plt
+
+
+def Generar():
+    t=np.arange(0,10,1/100)
+    A=float(amplitud.get())
+    F=float(frecuencia.get())    
+    x1=A*np.cos(2*np.pi*F*t)
+    f=Figure(figsize=(3,3),dpi=100)
+    img=f.add_subplot(111)
+    img.plot(x1,'b')
+    canvas=FigureCanvasTkAgg(f,frame) 
+    canvas.draw() #grafico el camvas
+    canvas.get_tk_widget().pack(side=tk.LEFT,padx=1,pady=1,ipadx=5,ipady=5)
+    amplitud.set("")
+    frecuencia.set("")
+
+def Muestrear():
+    A=2#float(Amp.get())
+    F=2#float(Frec.get())
+    Fa=1#float(fase.get())
+    tmin=0
+    tmax=5
+    t=np.linspace(tmin, tmax, 400)
+    x1 = A*np.cos(2*np.pi*F*t+Fa)
+    muestreo1=np.arange(0,1,1/100)
+    mues=float(mue.get())
+    T=1/(mues*F)
+    x2=A*np.cos((2*np.pi*F*muestreo1)+Fa)
+    plt.grid()
+    Nmin=np.ceil(tmin/T)
+    Nmax=np.floor(tmax/T)
+    n=np.arange(Nmin,Nmax)
+    x2=np.cos(2*np.pi*n*T*F)
+    f1=Figure(figsize=(3,3),dpi=100)
+    img1=f1.add_subplot(111)
+    img1.plot(x2,'b.')
+    canvas=FigureCanvasTkAgg(f1,frame1) 
+    canvas.draw() #grafico el camvas
+    canvas.get_tk_widget().pack(side=tk.RIGHT,padx=1,pady=1,ipadx=5,ipady=5)
+    Amp.set("")
+    Frec.set("")
+    
+ventana=Tk()
+ventana.geometry('1100x800')
+#label_2 = QtWidgets.QLabel(Dialog)
+#label_2.setGeometry(QtCore.QRect(200, 40, 561, 41))
+#label_2.setObjectName("label_2")
+#label_3 = QtWidgets.QLabel(Dialog)
+#label_3.setGeometry(QtCore.QRect(380, 110, 181, 21))
+#label_3.setObjectName("label_3")
+#label_4 = QtWidgets.QLabel(Dialog)
+#label_4.setGeometry(QtCore.QRect(250, 160, 421, 31))
+#label_4.setObjectName("label_4")
+
+ventana.title("Proyecto 1B-Procesamiento Digital de Señales")
+ventana.configure(bg="slate gray")
+#limitar el espaio de la interfaz
+ventana.resizable(0,0)
+
+
+L1=tk.Label(ventana, text="UNIVERSIDAD TECNICA DEL NORTE",font=("Time New Roman",16),fg="red").pack(fill=tk.X)
+L2=tk.Label(ventana, text="FICA - CITEL", font=("Arial"),fg="blue").pack()
+
+
+L3=tk.Label(ventana, text="Amplitud").pack()
+amplitud=tk.StringVar()
+Amp=tk.Entry(ventana, textvariable=amplitud).pack()
+
+L4=tk.Label(ventana, text="Frecuencia").pack()
+frecuencia=tk.StringVar()
+Frec=tk.Entry(ventana, textvariable=frecuencia).pack()
+
+L5=tk.Label(ventana, text="Fase").pack()
+fase=StringVar()
+fas=tk.Entry(ventana, textvariable = fase).pack()
+
+L6=tk.Label(ventana, text="Numero de Muestreo").pack()
+mue=tk.StringVar()
+muestra=tk.Entry(ventana, textvariable = mue).pack()
+
+L7=tk.Label(ventana, text="Funcion Obtenida").pack()
+#A=float(amplitud.get())
+#F=float(frecuencia.get())    
+#ob=(A+"cos(2*pi*"+F+"t)")
+ob=tk.StringVar()
+ob=tk.Entry(ventana, textvariable = ob).pack()
+
+#Label(frame, text="RESULTADO").pack()
+#Entry(frame, textvariable=total).pack()
+btn_graficar= tk.Button(ventana, text="Graficar",command=Generar).pack(side=tk.LEFT)
+#f=Figure(figsize=(5,5),dpi=100)
+#img=f.add_subplot(111) #111 una figura
+frame =tk.Frame(ventana,width=300, height=300)
+frame.config(bg="lightblue")
+frame.config(cursor="arrow")
+frame.pack(side=tk.LEFT, padx=1,pady=1,ipadx=5,ipady=5)
+
+btn_muestrear= tk.Button(ventana, text="Muestrear",command=Muestrear).pack(side=tk.RIGHT)
+frame1 =tk.Frame(ventana,width=300, height=300)
+frame1.config(bg="lightblue")
+frame1.config(cursor="arrow")
+frame1.pack(side=tk.RIGHT, padx=1,pady=1,ipadx=5,ipady=5)
+
+ventana.mainloop()

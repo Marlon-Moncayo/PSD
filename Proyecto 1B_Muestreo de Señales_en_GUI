@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec  5 17:21:23 2019
+Created on Wed Dec 11 13:40:29 2019
 
-@author: Marlon
+@author: Dell
 """
+import math
 import tkinter as tk
 from tkinter import * #*importar todas las clases
 import numpy as np
@@ -14,105 +15,173 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import pylab as plt
 
 
+
 def Generar():
-    t=np.arange(0,10,1/100)
+    tmin=0
+    tmax=0.05
+    t=np.linspace(tmin, tmax, 200)
+    #t=np.arange(0,0.5,1/400)
     A=float(amplitud.get())
-    F=float(frecuencia.get())    
-    x1=A*np.cos(2*np.pi*F*t)
+    F=float(frecuencia.get())
+    fa=float(fase.get())
+    #mues=float(muestra.get())
+    funcion.set(amplitud.get()+"cos(2*π*"+frecuencia.get()+"t+"+fase.get()+")")  
+    x1=A*np.cos(2*np.pi*F*t + fa)
     f=Figure(figsize=(3,3),dpi=100)
     img=f.add_subplot(111)
     img.plot(x1,'b')
-    canvas=FigureCanvasTkAgg(f,frame) 
+    canvas=FigureCanvasTkAgg(f,ventana) 
     canvas.draw() #grafico el camvas
-    canvas.get_tk_widget().pack(side=tk.LEFT,padx=1,pady=1,ipadx=5,ipady=5)
-    amplitud.set("")
-    frecuencia.set("")
-
-def Muestrear():
-    A=2#float(Amp.get())
-    F=2#float(Frec.get())
-    Fa=1#float(fase.get())
-    tmin=0
-    tmax=5
-    t=np.linspace(tmin, tmax, 400)
-    x1 = A*np.cos(2*np.pi*F*t+Fa)
-    muestreo1=np.arange(0,1,1/100)
-    mues=float(mue.get())
-    T=1/(mues*F)
-    x2=A*np.cos((2*np.pi*F*muestreo1)+Fa)
-    plt.grid()
+    #canvas.get_tk_widget().pack(side=tk.LEFT,padx=1,pady=1,ipadx=5,ipady=5)
+    canvas.get_tk_widget().place(x=50,y=400)
+    #amplitud.set("")
+    #frecuencia.set("")
+    #fase.set("")
+    
+    #muestra.set("")
+###Muestreo####
+    Ts=float(fs.get())
+    T=1/(Ts*F)
     Nmin=np.ceil(tmin/T)
     Nmax=np.floor(tmax/T)
     n=np.arange(Nmin,Nmax)
-    x2=np.cos(2*np.pi*n*T*F)
-    f1=Figure(figsize=(3,3),dpi=100)
-    img1=f1.add_subplot(111)
-    img1.plot(x2,'b.')
-    canvas=FigureCanvasTkAgg(f1,frame1) 
+    g=Figure(figsize=(5,5), dpi=50)
+    img=g.add_subplot(111)
+    x2=A*np.cos(2*np.pi*F*n*T+fa)
+    img.plot(n*T,x2)
+    img.plot(n*T,x2,'r*')
+    canvas=FigureCanvasTkAgg(g,ventana)
+    canvas.draw()
+    #canvas.get_tk_widget().pack(side=tk.LEFT,padx=1,pady=1,ipadx=5,ipady=5)
+    canvas.get_tk_widget().place(x=1000, y=400)
+    fs.set("")
+    
+    
+    
+def compleja():
+    f1=int(frecuencia.get())
+    f2=float(frec2.get())
+    A1=int(amplitud.get())
+    A2=float(amp2.get())
+    Fa1=int(fase.get())
+    Fa2=float(fase2.get())
+    if(f1>f2):
+        min1=f1
+    else:
+        min1=f2
+    while(1):
+        if(min1%f1==0 and min1%f2==0):
+            break
+        min1 = min1+1
+    fcm=min1
+    tmin=0
+    tmax=0.2
+    t=np.linspace(tmin,tmax,400)
+#definir la señal
+    xa=(A1*np.cos(2*np.pi*f1*t)+Fa1)+(A2*np.cos(2*np.pi*f2*t)+Fa2)
+#graficar la señal
+    f2=Figure(figsize=(3,3),dpi=100)
+    imga=f2.add_subplot(111)
+    imga.plot(xa,'b')
+    canvas=FigureCanvasTkAgg(f2,ventana) 
     canvas.draw() #grafico el camvas
-    canvas.get_tk_widget().pack(side=tk.RIGHT,padx=1,pady=1,ipadx=5,ipady=5)
-    Amp.set("")
-    Frec.set("")
+    #canvas.get_tk_widget().pack(side=tk.LEFT,padx=1,pady=1,ipadx=5,ipady=5)
+    canvas.get_tk_widget().place(x=400,y=400)
+    amplitud.set("")
+    frecuencia.set("")
+    fase.set("")
+    frec2.set("")
+    amp2.set("")
+    fase2.set("")
+    
+#muestreo de la señal
+#periodo del muestreo
+    T=1/(2*fcm)
+#tiempos de la grafica
+    nmin=np.ceil(tmin/T)
+    nmax=np.floor(tmax/T)
+#muestras de la señal
+    n=np.arange(nmin,nmax)
+#señal de muestreo
+    g1=Figure(figsize=(3,3), dpi=50)
+    imga=g1.add_subplot(212)
+    xa2=(A1*np.cos(2*np.pi*f1*n*T)+Fa1)+(A2*np.cos(2*np.pi*f2*n*T)+Fa2)
+#graficar la señal
+    imga.plot(n*T, xa2)
+    imga.plot(n*T, xa2,'r*')
+    canvas=FigureCanvasTkAgg(g1,ventana)
+    canvas.draw()
+    #canvas.get_tk_widget().pack(side=tk.LEFT,padx=1,pady=1,ipadx=5,ipady=5)
+    canvas.get_tk_widget().place(x=800, y=400)
+
+
+
+
     
 ventana=Tk()
-ventana.geometry('1100x800')
-#label_2 = QtWidgets.QLabel(Dialog)
-#label_2.setGeometry(QtCore.QRect(200, 40, 561, 41))
-#label_2.setObjectName("label_2")
-#label_3 = QtWidgets.QLabel(Dialog)
-#label_3.setGeometry(QtCore.QRect(380, 110, 181, 21))
-#label_3.setObjectName("label_3")
-#label_4 = QtWidgets.QLabel(Dialog)
-#label_4.setGeometry(QtCore.QRect(250, 160, 421, 31))
-#label_4.setObjectName("label_4")
 
-ventana.title("Proyecto 1B-Procesamiento Digital de Señales")
-ventana.configure(bg="slate gray")
-#limitar el espaio de la interfaz
-ventana.resizable(0,0)
-
-
-L1=tk.Label(ventana, text="UNIVERSIDAD TECNICA DEL NORTE",font=("Time New Roman",16),fg="red").pack(fill=tk.X)
-L2=tk.Label(ventana, text="FICA - CITEL", font=("Arial"),fg="blue").pack()
-
-
-L3=tk.Label(ventana, text="Amplitud").pack()
 amplitud=tk.StringVar()
-Amp=tk.Entry(ventana, textvariable=amplitud).pack()
-
-L4=tk.Label(ventana, text="Frecuencia").pack()
 frecuencia=tk.StringVar()
-Frec=tk.Entry(ventana, textvariable=frecuencia).pack()
-
-L5=tk.Label(ventana, text="Fase").pack()
-fase=StringVar()
-fas=tk.Entry(ventana, textvariable = fase).pack()
-
-L6=tk.Label(ventana, text="Numero de Muestreo").pack()
-mue=tk.StringVar()
-muestra=tk.Entry(ventana, textvariable = mue).pack()
-
-L7=tk.Label(ventana, text="Funcion Obtenida").pack()
-#A=float(amplitud.get())
-#F=float(frecuencia.get())    
-#ob=(A+"cos(2*pi*"+F+"t)")
+fase=tk.StringVar()
 ob=tk.StringVar()
-ob=tk.Entry(ventana, textvariable = ob).pack()
+mcm=tk.StringVar()
+#muestra=tk.StringVar()
+funcion=tk.StringVar()
 
-#Label(frame, text="RESULTADO").pack()
-#Entry(frame, textvariable=total).pack()
-btn_graficar= tk.Button(ventana, text="Graficar",command=Generar).pack(side=tk.LEFT)
-#f=Figure(figsize=(5,5),dpi=100)
-#img=f.add_subplot(111) #111 una figura
-frame =tk.Frame(ventana,width=300, height=300)
-frame.config(bg="lightblue")
-frame.config(cursor="arrow")
-frame.pack(side=tk.LEFT, padx=1,pady=1,ipadx=5,ipady=5)
 
-btn_muestrear= tk.Button(ventana, text="Muestrear",command=Muestrear).pack(side=tk.RIGHT)
-frame1 =tk.Frame(ventana,width=300, height=300)
-frame1.config(bg="lightblue")
-frame1.config(cursor="arrow")
-frame1.pack(side=tk.RIGHT, padx=1,pady=1,ipadx=5,ipady=5)
+ventana.geometry('1400x750')
+ventana.title("Proyecto 1B-Procesamiento Digital de Señales")
+ventana.configure(bg="green")
+#limitar el espaio de la interfaz
+ventana.resizable(0,0)# evita que se redimensione la ventana si los dos parametros estan en false
+ventana.iconbitmap("utn.ico")
+ventana.config(bg="cyan")
+
+
+L1=Label(ventana, text="Generador de señales continuas con su muestreo",bg="cyan",font=("Helvetica",16,'bold'),fg="red").place(x=350, y=10)
+L2=Label(ventana, text="PROYECTO",bg="cyan", font=("Arial",16,'bold'),fg="blue").place(x=500, y=50)
+
+
+L3=Label(ventana, text="AMPLITUD",font=("Arial",14),bg="cyan", fg="black").place(x=100, y=100)
+Amp=tk.Entry(ventana, textvariable=amplitud).place(x=210, y=105)
+
+L10=Label(ventana, text="AMPLITUD 2",font=("Arial",14),bg="cyan", fg="black").place(x=100, y=200)
+amp2=tk.StringVar()
+Amplitud2=tk.Entry(ventana, textvariable=amp2).place(x=220, y=205)
+
+
+L4=Label(ventana, text="FRECUENCIA",font=("Arial",14),bg="cyan", fg="black").place(x=400, y=100)
+Frec=tk.Entry(ventana, textvariable=frecuencia).place(x=550, y=105)
+
+L11=Label(ventana, text="FRECUENCIA 2",font=("Arial",14),bg="cyan", fg="black").place(x=400, y=200)
+frec2=tk.StringVar()
+frecuencia2=tk.Entry(ventana, textvariable=frec2).place(x=550, y=205)
+
+L12=tk.Label(ventana, text="Frecuencia de Muestreo:", font=("Arial",14), bg="cyan", fg="black").place(x=850, y=275)
+fs=tk.StringVar()
+fmuestreo=tk.Entry(ventana, textvariable=fs).place(x=1075, y=280)
+
+L5=Label(ventana, text="FASE", font=("Arial",14),bg="cyan",fg=("black")).place(x=750, y=100)
+fas=tk.Entry(ventana, textvariable=fase).place(x=825, y=105)
+
+L5=Label(ventana, text="FASE 2", font=("Arial",14),bg="cyan",fg=("black")).place(x=750, y=200)
+fase2=tk.StringVar()
+fas=tk.Entry(ventana, textvariable=fase2).place(x=825, y=205)
+
+
+L6=Label(ventana, text="Señal Generada",font=("Arial",14),bg="cyan",fg="black").place(x=125,y=350)
+
+L7=Label(ventana, text="Señal muestreada",font=("Arial",14),bg="cyan",fg="black").place(x=1050, y=350)
+
+L8=Label(ventana, text="Función Generada: ",font=("Arial",14),bg="cyan",fg="Black").place(x=50,y=275)
+
+L9=Label(ventana, textvariable=funcion,bg='cyan',font=('Arial',14)).place(x=250,y=275)
+
+
+btn_graficar= tk.Button(ventana, text="GRAFICAR",bg="blue",fg="white",relief="ridge",width=15,height=4, command=Generar).place(x=500, y=275)
+btn_com= tk.Button(ventana, text="FUNCION COMPLEJA",bg="blue",fg="white",relief="ridge",width=15,height=4, command=compleja).place(x=700, y=275)
+
 
 ventana.mainloop()
+
+

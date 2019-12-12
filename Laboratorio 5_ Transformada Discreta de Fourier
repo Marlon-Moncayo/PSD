@@ -1,0 +1,279 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Dec  4 15:35:02 2019
+
+@author: Dell
+"""
+import signals as sigs
+from matplotlib import pyplot as plt
+from scipy.fftpack import fft,ifft
+import numpy as np
+from matplotlib import style
+import math
+from scipy import signal
+from scipy.ndimage import gaussian_filter
+
+def calc_dft(sig_src_arr):
+    sig_dest_imx_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_rex_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_mag_arr = [None]*int((len(sig_src_arr)/2))
+    
+    for j in range(int(len(sig_src_arr)/2)):
+        sig_dest_rex_arr[j] = 0
+        sig_dest_imx_arr[j] = 0
+
+    for k in range(int(len(sig_src_arr)/2)):
+        for i in range(len(sig_src_arr)):
+            sig_dest_rex_arr[k] = sig_dest_rex_arr[k] + sig_src_arr[i]*math.cos(2*math.pi*k*i/len(sig_src_arr))
+            sig_dest_imx_arr[k] = sig_dest_imx_arr[k] - sig_src_arr[i]*math.sin(2*math.pi*k*i/len(sig_src_arr))
+
+    for x in range(int(len(sig_src_arr)/2)):
+        sig_dest_mag_arr[x] = math.sqrt(math.pow(sig_dest_rex_arr[x],2)+math.pow(sig_dest_imx_arr[x],2))
+        
+    style.use('ggplot')
+    f,plt_arr = plt.subplots(1, sharex=True)
+    f.suptitle("Discrete Fourier Transform (DFT)")
+    plt.xlim(0,280)
+    plt.ylim(0,1100)   
+    plt.stem(sig_dest_imx_arr)
+    plt.show()
+    
+calc_dft(sigs.ruido_1KHz)
+
+
+def calc_dft(sig_src_arr):
+    sig_dest_imx_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_rex_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_mag_arr = [None]*int((len(sig_src_arr)/2))
+    
+    for j in range(int(len(sig_src_arr)/2)):
+        sig_dest_rex_arr[j] = 0
+        sig_dest_imx_arr[j] = 0
+
+    for k in range(int(len(sig_src_arr)/2)):
+        for i in range(len(sig_src_arr)):
+            sig_dest_rex_arr[k] = sig_dest_rex_arr[k] + sig_src_arr[i]*math.cos(2*math.pi*k*i/len(sig_src_arr))
+            sig_dest_imx_arr[k] = sig_dest_imx_arr[k] - sig_src_arr[i]*math.sin(2*math.pi*k*i/len(sig_src_arr))
+
+    for x in range(int(len(sig_src_arr)/2)):
+        sig_dest_mag_arr[x] = math.sqrt(math.pow(sig_dest_rex_arr[x],2)+math.pow(sig_dest_imx_arr[x],2))
+        
+    style.use('ggplot')
+    f,plt_arr = plt.subplots(1, sharex=True)
+    f.suptitle("Discrete Fourier Transform (DFT)")
+  
+
+
+    plt.xlim(0,200)
+    plt.ylim(0,300)   
+    plt.stem(sig_dest_imx_arr)
+    plt.show()
+
+calc_dft(sigs.ruido_100Hz)
+
+
+
+def calc_dft(sig_src_arr):
+    sig_dest_imx_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_rex_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_mag_arr = [None]*int((len(sig_src_arr)/2))
+    
+    for j in range(int(len(sig_src_arr)/2)):
+        sig_dest_rex_arr[j] = 0
+        sig_dest_imx_arr[j] = 0
+
+    for k in range(int(len(sig_src_arr)/2)):
+        for i in range(len(sig_src_arr)):
+            sig_dest_rex_arr[k] = sig_dest_rex_arr[k] + sig_src_arr[i]*math.cos(2*math.pi*k*i/len(sig_src_arr))
+            sig_dest_imx_arr[k] = sig_dest_imx_arr[k] - sig_src_arr[i]*math.sin(2*math.pi*k*i/len(sig_src_arr))
+
+    for x in range(int(len(sig_src_arr)/2)):
+        sig_dest_mag_arr[x] = math.sqrt(math.pow(sig_dest_rex_arr[x],2)+math.pow(sig_dest_imx_arr[x],2))
+        
+    style.use('ggplot')
+    f,plt_arr = plt.subplots(1, sharex=True)
+    f.suptitle("Discrete Fourier Transform (DFT)")
+  
+
+
+    plt.xlim(0,205)
+    plt.ylim(0,2900)   
+    plt.stem(sig_dest_imx_arr)
+    plt.show()
+    
+calc_dft(sigs.ruido_extra_100Hz)
+
+
+
+def calc_dft(sig_src_arr):
+    sig_dest_imx_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_rex_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_mag_arr = [None]*int((len(sig_src_arr)/2))
+    
+    for j in range(int(len(sig_src_arr)/2)):
+        sig_dest_rex_arr[j] = 0
+        sig_dest_imx_arr[j] = 0
+
+    for k in range(int(len(sig_src_arr)/2)):
+        for i in range(len(sig_src_arr)):
+            sig_dest_rex_arr[k] = sig_dest_rex_arr[k] + sig_src_arr[i]*math.cos(2*math.pi*k*i/len(sig_src_arr))
+            sig_dest_imx_arr[k] = sig_dest_imx_arr[k] - sig_src_arr[i]*math.sin(2*math.pi*k*i/len(sig_src_arr))
+
+    for x in range(int(len(sig_src_arr)/2)):
+        sig_dest_mag_arr[x] = math.sqrt(math.pow(sig_dest_rex_arr[x],2)+math.pow(sig_dest_imx_arr[x],2))
+        
+    style.use('ggplot')
+    f,plt_arr = plt.subplots(1, sharex=True)
+    f.suptitle("Discrete Fourier Transform (DFT)")
+  
+
+
+    plt.xlim(0,350)
+    plt.ylim(0,13000)   
+    plt.stem(sig_dest_imx_arr)
+    plt.show()
+    
+calc_dft(sigs.ecg_100Hz)    
+
+
+def calc_dft(sig_src_arr):
+    sig_dest_imx_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_rex_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_mag_arr = [None]*int((len(sig_src_arr)/2))
+    
+    for j in range(int(len(sig_src_arr)/2)):
+        sig_dest_rex_arr[j] = 0
+        sig_dest_imx_arr[j] = 0
+
+    for k in range(int(len(sig_src_arr)/2)):
+        for i in range(len(sig_src_arr)):
+            sig_dest_rex_arr[k] = sig_dest_rex_arr[k] + sig_src_arr[i]*math.cos(2*math.pi*k*i/len(sig_src_arr))
+            sig_dest_imx_arr[k] = sig_dest_imx_arr[k] - sig_src_arr[i]*math.sin(2*math.pi*k*i/len(sig_src_arr))
+
+    for x in range(int(len(sig_src_arr)/2)):
+        sig_dest_mag_arr[x] = math.sqrt(math.pow(sig_dest_rex_arr[x],2)+math.pow(sig_dest_imx_arr[x],2))
+        
+    style.use('ggplot')
+    f,plt_arr = plt.subplots(1, sharex=True)
+    f.suptitle("Discrete Fourier Transform (DFT)")
+  
+
+
+    plt.xlim(0,500)
+    plt.ylim(0,25)   
+    plt.stem(sig_dest_imx_arr)
+    plt.show()
+calc_dft(sigs.airflow_calibrated_100Hz)
+
+def calc_dft(sig_src_arr):
+    sig_dest_imx_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_rex_arr = [None]*int((len(sig_src_arr)/2))
+    sig_dest_mag_arr = [None]*int((len(sig_src_arr)/2))
+    
+    for j in range(int(len(sig_src_arr)/2)):
+        sig_dest_rex_arr[j] = 0
+        sig_dest_imx_arr[j] = 0
+
+    for k in range(int(len(sig_src_arr)/2)):
+        for i in range(len(sig_src_arr)):
+            sig_dest_rex_arr[k] = sig_dest_rex_arr[k] + sig_src_arr[i]*math.cos(2*math.pi*k*i/len(sig_src_arr))
+            sig_dest_imx_arr[k] = sig_dest_imx_arr[k] - sig_src_arr[i]*math.sin(2*math.pi*k*i/len(sig_src_arr))
+
+    for x in range(int(len(sig_src_arr)/2)):
+        sig_dest_mag_arr[x] = math.sqrt(math.pow(sig_dest_rex_arr[x],2)+math.pow(sig_dest_imx_arr[x],2))
+        
+    style.use('ggplot')
+    f,plt_arr = plt.subplots(1, sharex=True)
+    f.suptitle("Discrete Fourier Transform (DFT)")
+   
+    
+    plt.xlim(0,750)
+    plt.ylim(0,6000)   
+    plt.stem(sig_dest_imx_arr)
+    plt.show()
+calc_dft(sigs.airflow_100Hz)
+
+#calc_dft(sigs.ruido_1KHz)
+#calc_dft(sigs.ruido_100Hz)
+#calc_dft(sigs.ruido_extra_100Hz)
+#calc_dft(sigs.ecg_100Hz)
+#calc_dft(sigs.airflow_calibrated_100Hz)
+#calc_dft(sigs.airflow_100Hz)
+
+# fFiltro en el ejercicio 1
+
+##Numero de Muestras
+
+
+
+gaus_smooth=gaussian_filter(sigs.ruido_1KHz,2)
+plt.plot(gaus_smooth,color='blue', label ='data smoothing')
+plt.plot(sigs.ruido_1KHz,color='yellow',label='original samples')
+plt.title("Filtro Gaussiano en la Primera Señal")
+
+m=((sigs.ruido_1KHz)-(gaus_smooth))
+plt.plot(m, color='green')
+plt.title("Ruido Eliminado de la Señal 1")
+plt.show() 
+#calc_dft(gaus_smooth)
+
+gaus_smooth=gaussian_filter(sigs.ruido_100Hz,2)
+plt.plot(gaus_smooth,color='blue', label ='data smoothing')
+plt.plot(sigs.ruido_100Hz,color='yellow',label='original samples')
+plt.title("Filtro Gaussiano en la Segunda Señal ")
+
+m1=((sigs.ruido_100Hz)-(gaus_smooth))
+plt.plot(m1,color='green') 
+plt.title("Ruido Eliminado de la Señal 2")
+plt.show()
+ 
+#####
+savis_smooth=signal.savgol_filter(sigs.ruido_extra_100Hz,9,3) ### senal de entrada/ tamano de wi/ exponente
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth,color='blue', label ='data smoothing')
+plt.plot(sigs.ruido_extra_100Hz,color='yellow',label='original samples')
+plt.title("Filtro Savitzky Golay en la Tercera Señal ")
+
+m=((sigs.ruido_extra_100Hz)-(savis_smooth))
+plt.plot(m,color='green')
+plt.title("Ruido Eliminado de la Señal 3")
+plt.show() 
+
+####
+gaus_smooth1=gaussian_filter(sigs.ecg_100Hz,2)
+plt.plot(gaus_smooth1,color='blue', label ='data smoothing')
+plt.plot(sigs.ecg_100Hz,color='yellow',label='original samples')
+plt.title("Filtro Gaussiano en la Cuarta Señal ")
+
+m1=((sigs.ecg_100Hz)-(gaus_smooth1))
+plt.plot(m1,color='green')
+plt.title("Ruido Eliminado de la Señal 4")
+plt.show()
+###
+
+####
+gaus_smooth2=gaussian_filter(sigs.airflow_calibrated_100Hz,2)
+plt.plot(gaus_smooth2,color='red', label ='data smoothing')
+plt.plot(sigs.airflow_calibrated_100Hz,color='yellow',label='original samples')
+plt.title("Filtro Gaussiano en la Quinta Señal ")
+
+m1=((sigs.airflow_calibrated_100Hz)-(gaus_smooth2))
+plt.plot(m1,color='green')
+plt.title("Ruido Eliminado de la Señal 5")
+plt.show()
+###
+####
+
+###
+savis_smooth2=signal.savgol_filter(sigs.airflow_100Hz,9,3) ### senal de entrada/ tamano de wi/ exponente
+signal.savgol_coeffs(11,3)
+plt.plot(savis_smooth2,color='blue', label ='data smoothing')
+plt.plot(sigs.airflow_100Hz,color='yellow',label='original samples')
+plt.title("Filtro Savitzky Golay en la Sexta Señal ")
+
+m=((sigs.airflow_100Hz)-(savis_smooth2))
+plt.plot(m,color='green')
+plt.title("Ruido Eliminado de la Señal 6")
+plt.show() 
+####
+

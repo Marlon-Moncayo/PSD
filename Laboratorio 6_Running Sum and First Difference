@@ -1,0 +1,161 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Dec 14 02:52:37 2019
+
+@author: Dell
+"""
+import numpy as np
+import signals as sigs
+import pylab as plt 
+
+""" Original signal - Primera Senal """
+x1=sigs.ruido_1KHz 
+""" FIRST DIFFERENCE """
+def ddf(x1):
+    y=[]
+    for i in range(0,len(x1)):
+        yn=x1[i]-x1[i-1]
+        y.append(yn)
+        print(y)
+        plt.plot(y,'g.')
+        plt.title("Propiedad First Difference en la Primera señal")
+ddf(x1)
+
+""" RUNNING SUM """
+def idf(x1):
+    y=[0]
+    for i in range(1,40):
+        yn=x1[i]+y[i-1]
+        y.append(yn)
+        print(y)
+        plt.plot(y,'r.')
+        plt.title("Propiedad Running Sum en la Primera señal")
+idf(x1)
+        
+        
+""" Original signal - Segunda Senal """
+
+x2=sigs.ruido_100Hz 
+"""First Difference"""
+def ddf2(x2):
+    y2=[]
+    for i in range(0,len(x2)):
+        yn=x2[i]-x2[i-1]
+        y2.append(yn)
+        print(y2)
+        plt.plot(y2,'g.')
+        plt.title("Propiedad First Difference en la Segunda señal")
+ddf2(x2)
+
+"""Runnig Sum"""
+def idf2(x2):
+    y2=[0]
+    for i in range(1,len(x2)):
+        yn=x1[i]+y2[i-1]
+        y2.append(yn)
+        print(y2)
+        plt.plot(y2,'r.')
+        plt.title("Propiedad Running Sum en la Segunda señal")
+idf2(x2)
+
+
+
+x3=sigs.ruido_extra_100Hz
+"""First Difference"""
+def ddf3(x3):
+    y3=[]
+    for i in range(0,len(x3)):
+        yn=x3[i]-x3[i-1]
+        y3.append(yn)
+        print(y3)
+        plt.plot(y3,'g.')
+        plt.title("Propiedad First Difference en la Tercera señal")
+ddf3(x3)
+
+"""Runnig Sum"""
+def idf3(x3):
+    y3=[0]
+    for i in range(1,70):
+        yn=x3[i]+y3[i-1]
+        y3.append(yn)
+        print(y3)
+        plt.plot(y3,'r.')
+        plt.title("Propiedad Running Sum en la Tercera señal")
+idf3(x3)
+
+
+
+
+
+x4=sigs.ecg_100Hz
+
+"""First Difference"""
+def ddf4(x4):
+    y4=[]
+    for i in range(0,len(x4)):
+        yn=x4[i]-x4[i-1]
+        y4.append(yn)
+        print(y4)
+        plt.plot(y4,'g.')
+        plt.title("Propiedad First Difference en la Cuarta señal")
+      
+ddf4(x4)
+"""Runnig Sum"""
+
+def idf4(x4):
+    y4=[0]
+    for i in range(1,70):
+        yn=x4[i]+y4[i-1]
+        y4.append(yn)
+        print(y4)
+        plt.plot(y4,'r.')
+        plt.title("Propiedad Running Sum en la Cuarta señal")
+idf4(x4)
+
+x5=sigs.airflow_calibrated_100Hz
+"""First Difference"""
+def ddf5(x5):
+    y5=[]
+    for i in range(0,len(x5)):
+        yn=x5[i]-x5[i-1]
+        y5.append(yn)
+        print(y5)
+        plt.plot(y5,'g.')
+        plt.title("Propiedad First Difference en la Quinta señal")
+ 
+ddf5(x5)
+
+"""Runnig Sum"""
+def idf5(x5):
+    y5=[0]
+    for i in range(1,len(x5)):
+        yn=x5[i]+y5[i-1]
+        y5.append(yn)
+        print(y5)
+        plt.plot(y5,'r.')
+        plt.title("Propiedad Running Sum en la Quinta señal")
+idf5(x5)
+
+
+x6=sigs.airflow_100Hz
+"""First Difference"""
+def ddf6(x6):
+    y6=[]
+    for i in range(0,len(x6)):
+        yn=x6[i]-x6[i-1]
+        y6.append(yn)
+        print(y6)
+        plt.plot(y6,'g.')
+        plt.title("Propiedad First Difference en la Sexta señal")
+
+ddf6(x6)
+"""Runnig Sum"""
+def idf6(x6):
+    y6=[0]
+    for i in range(6, len(x6)):
+        yn=x6[i]+y6[i-1]
+        y6.append(yn)
+        print(y6)
+        plt.plot(y6,'r.')
+        plt.title("Propiedad Running Sum en la Secta señal")
+idf6(x6)

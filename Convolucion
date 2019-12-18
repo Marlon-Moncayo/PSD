@@ -1,0 +1,196 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Dec 18 15:38:08 2019
+
+@author: Dell
+"""
+from scipy import signal
+from matplotlib import pyplot as plt
+import señal as sigs
+from matplotlib import style
+import numpy as np
+
+style.use('ggplot')
+
+f, plt_arr =plt.subplots(2,sharex=True)
+f.suptitle("Input signal and impulse response")
+plt_arr[0].plot(sigs.InputSignal_1kHz_15kHz)
+plt_arr[1].plot(sigs.Impulse_response)
+plt.show()
+
+f, plt_arr =plt.subplots(2,sharex=True)
+f.suptitle("Input signal and impulse response")
+plt_arr[0].plot(sigs.ecg_100Hz)
+plt_arr[1].plot(sigs.Impulse_response)
+plt.show()
+
+f, plt_arr =plt.subplots(2,sharex=True)
+f.suptitle("Input signal and impulse response")
+plt_arr[0].plot(sigs.airflow_calibrated_100Hz)
+plt_arr[1].plot(sigs.Impulse_response)
+plt.show()
+
+f, plt_arr =plt.subplots(2,sharex=True)
+f.suptitle("Input signal and impulse response")
+plt_arr[0].plot(sigs.airflow_100Hz)
+plt_arr[1].plot(sigs.Impulse_response)
+plt.show()
+
+
+sig = np.array([0,0,0,0,1,1,1,1])
+filter = np.array([1,1,0])
+
+conv_result = signal.convolve(sig,filter)
+deconv_result = signal.deconvolve(conv_result,filter)
+
+print("Convolution result :")
+print(conv_result)
+print("Deconvolution result : ")
+print(deconv_result)
+
+
+##########################################
+
+output_signal = np.cumsum(sigs.InputSignal_1kHz_15kHz)
+
+#style.use('ggplot')
+style.use('dark_background')
+f,plt_arr = plt.subplots(2,sharex=True)
+f.suptitle("Running Sum")
+plt_arr[0].plot(sigs.InputSignal_1kHz_15kHz,color='yellow')
+plt_arr[0].set_title("Input Signal")
+plt_arr[1].plot(output_signal,color ='magenta')
+plt_arr[1].set_title("Output Signal")
+plt.show()
+
+output_signal = np.cumsum(sigs.ecg_100Hz)
+style.use('dark_background')
+f,plt_arr = plt.subplots(2,sharex=True)
+f.suptitle("Running Sum")
+plt_arr[0].plot(sigs.ecg_100Hz,color='green')
+plt_arr[0].set_title("Input Signal")
+plt_arr[1].plot(output_signal,color ='magenta')
+plt_arr[1].set_title("Output Signal")
+plt.show()
+
+output_signal = np.cumsum(sigs.airflow_calibrated_100Hz)
+style.use('dark_background')
+f,plt_arr = plt.subplots(2,sharex=True)
+f.suptitle("Running Sum")
+plt_arr[0].plot(sigs.airflow_calibrated_100Hz,color='green')
+plt_arr[0].set_title("Input Signal")
+plt_arr[1].plot(output_signal,color ='magenta')
+plt_arr[1].set_title("Output Signal")
+plt.show()
+
+output_signal = np.cumsum(sigs.airflow_100Hz)
+style.use('dark_background')
+f,plt_arr = plt.subplots(2,sharex=True)
+f.suptitle("Running Sum")
+plt_arr[0].plot(sigs.airflow_100Hz,color='green')
+plt_arr[0].set_title("Input Signal")
+plt_arr[1].plot(output_signal,color ='magenta')
+plt_arr[1].set_title("Output Signal")
+plt.show()
+
+##############################CODE#############################################################
+output_signal = np.cumsum(sigs.InputSignal_1kHz_15kHz)
+
+#style.use('ggplot')
+style.use('dark_background')
+
+f,plt_arr = plt.subplots(2,sharex=True)
+f.suptitle("Running Sum")
+
+plt_arr[0].plot(sigs.InputSignal_1kHz_15kHz,color='yellow')
+plt_arr[0].set_title("Input Signal")
+
+plt_arr[1].plot(output_signal,color ='magenta')
+plt_arr[1].set_title("Output Signal")
+
+plt.show()
+
+##############################CODE#############################################################
+
+
+
+
+def calc_running_sum(sig_src_arr,sig_dest_arr):
+    for x in range(len(sig_dest_arr)):
+        sig_dest_arr[x] = 0
+
+    for x in range(len(sig_src_arr)):
+        sig_dest_arr[x] =  sig_dest_arr[x-1]+sig_src_arr[x]
+
+        
+
+    style.use('ggplot')
+    #style.use('dark_background')
+
+    f,plt_arr = plt.subplots(2,sharex=True)
+    f.suptitle("Running Sum")
+
+    plt_arr[0].plot(sig_src_arr,color='red')
+    plt_arr[0].set_title("Input Signal")
+
+    plt_arr[1].plot(output_signal,color ='magenta')
+    plt_arr[1].set_title("Output Signal")
+
+    plt.show()
+
+output_signal =[None]*320
+calc_running_sum(sigs.InputSignal_1kHz_15kHz,output_signal)
+calc_running_sum(sigs.ecg_100Hz,output_signal)
+calc_running_sum(sigs.airflow_calibrated_100Hz,output_signal)
+calc_running_sum(sigs.airflow_100Hz,output_signal)
+
+###################################################CODE##############################################################
+
+output_signal = np.diff(sigs.InputSignal_1kHz_15kHz)
+output_signal = np.diff(sigs.ecg_100Hz)
+output_signal = np.diff(sigs.airflow_calibrated_100Hz)
+output_signal = np.diff(sigs.airflow_100Hz)
+
+style.use('ggplot')
+#style.use('dark_background')
+
+f,plt_arr = plt.subplots(2,sharex=True)
+f.suptitle("First Difference")
+
+plt_arr[0].plot(sigs.InputSignal_1kHz_15kHz,color='green')
+plt_arr[0].set_title("Input Signal")
+
+plt_arr[1].plot(output_signal,color ='magenta')
+plt_arr[1].set_title("Output Signal")
+
+plt.show()
+
+###################################################CODE##############################################################
+
+
+
+def calc_first_difference(sig_src_arr,sig_dest_arr):
+    for x in range(len(sig_dest_arr)):
+        sig_dest_arr[x] =0
+
+    for x in range(len(sig_src_arr)):
+        sig_dest_arr[x] = sig_src_arr[x] - sig_src_arr[x-1]
+        
+
+    style.use('ggplot')
+    #style.use('dark_background')
+
+    f,plt_arr = plt.subplots(2,sharex=True)
+    f.suptitle("First Difference")
+
+    plt_arr[0].plot(sig_src_arr,color='red')
+    plt_arr[0].set_title("Input Signal")
+
+    plt_arr[1].plot(sig_dest_arr,color ='magenta')
+    plt_arr[1].set_title("Output Signal")
+
+    plt.show()
+
+
+output_signal =[None]*320
+calc_first_difference(sigs.InputSignal_1kHz_15kHz,output_signal)

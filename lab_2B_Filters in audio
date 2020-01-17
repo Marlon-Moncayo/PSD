@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jan 16 15:20:31 2020
+
+@author: Dell
+"""
+
+import wave
+import numpy
+import matplotlib.pyplot as plt
+from scipy import signal
+from scipy.signal import filtfilt
+from scipy.fftpack import fft,ifft, fftshift
+
+spf = wave.open('ragnar.wav','r')# se encarga de abrir el archivo en formato .wav 
+(nChannels, sampWidth, sampleRate, nFrames, compType, compName) = spf.getparams()# encontrar las caracteristicas del audio.
+
+#extraemos el audio del archivo wav
+input_signal = spf.readframes(-1)
+input_signal = numpy.fromstring(input_signal, 'Int16')
+spf.close()
+
+# Pasar al dominio de la frecuencia
+freq_domain_signal = fft(input_signal) # Aplicacion de la Transformada rapida de Fourier (fft)
+plt.plot(freq_domain_signal)# impresion o grafica de la señal
+plt.xlim(0,500000)# numero de muestras de alcance de la grafica en x
+plt.show()
+
+# creacion del filtro
+# con respecto a frecuencias de voz=250Hz - 3KHz
+# SampleRate 44000 -> señal 22000
+N = 8 #orden del filtro
+nyq = 0.5 * sampleRate# frecuencia de nyquist o frecuencia de muestreo que la tasa de muestras que se toman de la señal.
+low = 250/ nyq #valor en funcion a la frecuencia de muestreo
+high = 3000/ nyq #valor en funcion a la frecuencia de muestreo
+
+#b, a = signal.butter(N, [1000, 2300], fs=sampleRate, btype='bp')
+b, a = signal.butter(N, 250, fs=sampleRate, btype='hp')# Se procede a crear un filtro pasa altos para eliminar frecuencias menores a 250 Hz
+#que no corresponden a la voz 
+
+# aplicando el filtro
+output_signal1 = signal.filtfilt(b, a, input_signal)#tenemos la señal resultante del primer  filtro
+
+b, a = signal.butter(N, 3000, fs=sampleRate, btype='lp')# Se procede a pasar la anterior salida por un nuevo filtro pasa bajos para eliminar
+# las frecuencias de mas de 2500 Hz
+output_signal2 = signal.filtfilt(b, a, output_signal1)#tenemos la señal resultante del segundo  filtro
+# ceate output file
+wav_out = wave.open("output5.wav", "w")# creamos con w que es de write un nuevo archivo .wav en base a nuestra señal anterior.
+wav_out.setparams((nChannels, sampWidth, int(4*sampleRate), nFrames, compType, compName))# agregamos las caracteristicas del audio
+
+# write to output file: se realiza la salida del nuevo archivo 
+wav_out.writeframes(output_signal2.tobytes())
+wav_out.close()
+
+# plot the signals
+plt.plot( input_signal, label='Input')# Graficar la señal original
+plt.plot(output_signal2, label='Output')# Graficar la señal de salida o nueva señal.
+plt.show()# graficar la señal.
+
+
+
+
+
+

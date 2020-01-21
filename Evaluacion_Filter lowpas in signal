@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jan 21 07:30:32 2020
+
+@author: Dell
+"""
+import numpy as np
+import wave
+import numpy
+import matplotlib.pyplot as plt
+from scipy import signal
+from scipy.signal import filtfilt
+from scipy.fftpack import fft,ifft, fftshift
+import testset as sigs # Chapter 0
+
+
+plt.plot(sigs.prueba_Dataset)
+plt.title("Señal Original")
+
+
+freq_domain_signal = fft(sigs.prueba_Dataset)
+plt.title("Transformada de Fourier")
+plt.stem(freq_domain_signal)
+plt.xlim(0,400)
+#plt.ylim(0,14000)
+plt.show()
+
+freq_domain_signal=np.array(freq_domain_signal)
+freq=np.abs(freq_domain_signal)
+plt.plot(freq)
+a=abs(freq[0])
+a
+print("La frecuencia de muestreo es de: 32262.0")
+print("La frecuencia es {} Hz".format(np.argmax(freq)))
+signal_ecg=np.zeros(len(sigs.prueba_Dataset))
+#normalizar la señal de entrada
+for i,num in enumerate (sigs.prueba_Dataset):
+    signal_ecg[i]=float(sigs.prueba_Dataset[i]/max(sigs.prueba_Dataset))
+#grafica normalizada
+plt.plot(signal_ecg)
+plt.title("Normalizar la señal de entrada")
+plt.show()
+    
+sampleRate=32262.0
+nyq=0.5*sampleRate
+
+lowpass_coef3=signal.firwin(27,3,pass_zero=True,nyq=nyq, window='blackman')
+plt.title("Diseño del Filtro Pasa Bajos")
+plt.plot(lowpass_coef3)
+plt.show()
+#convolucion
+output3=signal.convolve(signal_ecg,lowpass_coef3, mode='same')
+f,plt_arr=plt.subplots(2,sharex=True)
+#grafica de resultados
+f.suptitle("FILTRO Pasa bajos ")
+plt_arr[0].plot(signal_ecg,color='blue')
+plt_arr[0].set_title("Senal entrada")
+plt_arr[1].plot(output3,color='red')
+plt_arr[1].set_title("Senal filtrada PASA BAJOS 3 Hz")
+plt.show()
+#analisis de frecuencia
+freq_domain_signal = fft(output3)
+plt.stem(output3)
+plt.xlim(0,600)
+plt.show()
